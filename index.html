@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alex ❤️ Maddie</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Georgia", serif;
+        background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      .container {
+        text-align: center;
+        padding: 2rem;
+        max-width: 600px;
+        position: relative;
+        z-index: 10;
+      }
+
+      h1 {
+        font-size: 3.5rem;
+        color: #d63384;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .names {
+        font-size: 2.5rem;
+        color: #c41e3a;
+        margin-bottom: 2rem;
+        font-weight: bold;
+      }
+
+      .message {
+        font-size: 1.3rem;
+        color: #6b3a5e;
+        line-height: 1.8;
+        margin-bottom: 2.5rem;
+        padding: 0 1rem;
+      }
+
+      .heart-button {
+        background: linear-gradient(135deg, #ff6b9d 0%, #c41e3a 100%);
+        border: none;
+        color: white;
+        padding: 1.2rem 3rem;
+        font-size: 1.3rem;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 20px rgba(196, 30, 58, 0.4);
+        font-family: "Georgia", serif;
+        font-weight: bold;
+      }
+
+      .heart-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(196, 30, 58, 0.5);
+      }
+
+      .heart-button:active {
+        transform: translateY(-1px);
+      }
+
+      .button-container {
+        position: relative;
+        height: 80px;
+        margin: 2rem 0;
+      }
+
+      .runaway {
+        position: absolute;
+        transition: all 0.3s ease;
+      }
+
+      .floating-heart {
+        position: fixed;
+        font-size: 2rem;
+        animation: float-up 4s ease-in forwards;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      @keyframes float-up {
+        0% {
+          opacity: 1;
+          transform: translateY(0) rotate(0deg);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-100vh) rotate(360deg);
+        }
+      }
+
+      .counter {
+        font-size: 1.5rem;
+        color: #d63384;
+        margin-top: 2rem;
+        font-weight: bold;
+      }
+
+      .love-meter {
+        width: 300px;
+        height: 30px;
+        background: white;
+        border-radius: 15px;
+        margin: 2rem auto;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .love-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #ff6b9d 0%, #c41e3a 100%);
+        width: 0%;
+        transition: width 0.5s ease;
+        border-radius: 15px;
+      }
+
+      .love-label {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        line-height: 30px;
+        color: #6b3a5e;
+        font-weight: bold;
+        font-size: 0.9rem;
+      }
+
+      .surprise-message {
+        opacity: 0;
+        transition: opacity 1s ease;
+        font-size: 1.8rem;
+        color: #c41e3a;
+        margin-top: 1.5rem;
+        font-weight: bold;
+      }
+
+      .surprise-message.show {
+        opacity: 1;
+      }
+
+      .photo-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 100;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .photo-modal.show {
+        display: flex;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        max-width: 500px;
+        text-align: center;
+        position: relative;
+        animation: popIn 0.5s ease;
+      }
+
+      @keyframes popIn {
+        0% {
+          transform: scale(0.5);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .modal-photo {
+        width: 100%;
+        max-width: 400px;
+        height: 300px;
+        background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 100%);
+        border-radius: 15px;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .modal-message {
+        font-size: 1.5rem;
+        color: #c41e3a;
+        margin-bottom: 1.5rem;
+        font-weight: bold;
+      }
+
+      .close-button {
+        background: linear-gradient(135deg, #ff6b9d 0%, #c41e3a 100%);
+        border: none;
+        color: white;
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+        border-radius: 25px;
+        cursor: pointer;
+        font-family: "Georgia", serif;
+        font-weight: bold;
+      }
+
+      .close-button:hover {
+        transform: scale(1.05);
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+        .names {
+          font-size: 2rem;
+        }
+        .message {
+          font-size: 1.1rem;
+        }
+        .modal-content {
+          margin: 1rem;
+          padding: 1.5rem;
+        }
+        .modal-photo {
+          height: 250px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>💕</h1>
+      <div class="names">Alex & Maddie</div>
+      <div class="message">
+        Every moment with you is my favorite moment. Click below to show how
+        much I love you! 💗
+      </div>
+
+      <div class="button-container">
+        <button
+          class="heart-button"
+          onclick="sendLove()"
+          onmouseover="maybeRunAway(event)"
+          id="loveButton"
+        >
+          Send Love 💖
+        </button>
+      </div>
+
+      <div class="love-meter">
+        <div class="love-fill" id="loveFill"></div>
+        <div class="love-label" id="loveLabel">Love Meter</div>
+      </div>
+
+      <div class="counter">Hearts sent: <span id="heartCount">0</span></div>
+
+      <div class="surprise-message" id="surpriseMessage"></div>
+    </div>
+
+    <div class="photo-modal" id="photoModal">
+      <div class="modal-content">
+        <div class="modal-photo" id="modalPhoto">📸</div>
+        <div class="modal-message" id="modalMessage">
+          Special moment unlocked!
+        </div>
+        <button class="close-button" onclick="closeModal()">
+          Keep Going! 💕
+        </button>
+      </div>
+    </div>
+
+    <script>
+      let heartCount = 0
+      let runAwayCount = 0
+      const hearts = ["❤️", "💕", "💖", "💗", "💓", "💝", "💘"]
+      const surpriseMessages = [
+        "You're amazing! 🌟",
+        "Best girlfriend ever! 💯",
+        "You make me so happy! 😊",
+        "Lucky to have you! 🍀",
+        "Forever and always! ♾️",
+        "You're my everything! 🌹",
+        "Love you to the moon! 🌙",
+        "You light up my life! ✨",
+      ]
+
+      const teaseMessages = [
+        "Too slow! 😜",
+        "Gotta be faster! 🏃",
+        "Almost got me! 😏",
+        "Nice try! 💨",
+        "Whoops! 😆",
+      ]
+
+      // Special moments that appear every 10 clicks
+      const photoMoments = [
+        {
+          emoji: "🎉",
+          message: "10 hearts! Remember our first date? Best day ever! 🥰",
+        },
+        {
+          emoji: "☕",
+          message: "20 hearts! All those moments we've shared ☕💕",
+        },
+        {
+          emoji: "🌟",
+          message: "30 hearts! You're my shining star, Maddie! ✨",
+        },
+        {
+          emoji: "🎬",
+          message: "40 hearts! Movie nights with you = perfection 🍿",
+        },
+        {
+          emoji: "🌹",
+          message: "50 hearts! You deserve all the flowers in the world! 💐",
+        },
+        {
+          emoji: "🎵",
+          message: "60 hearts! You're my favorite song on repeat 🎶",
+        },
+        {
+          emoji: "🌈",
+          message: "70 hearts! You bring color to my world, Maddie! 🌈",
+        },
+        {
+          emoji: "🍕",
+          message: "80 hearts! Pizza dates & late night talks forever! 🍕💬",
+        },
+        {
+          emoji: "✨",
+          message: "90 hearts! Every moment with you is magical! ✨",
+        },
+        { emoji: "💍", message: "100 hearts! You're my forever, Maddie! 💕👑" },
+      ]
+
+      function closeModal() {
+        document.getElementById("photoModal").classList.remove("show")
+      }
+
+      function showPhotoMoment(momentIndex) {
+        const moment = photoMoments[momentIndex]
+        document.getElementById("modalPhoto").textContent = moment.emoji
+        document.getElementById("modalMessage").textContent = moment.message
+        document.getElementById("photoModal").classList.add("show")
+      }
+
+      function maybeRunAway(event) {
+        const button = document.getElementById("loveButton")
+
+        // 60% chance the button runs away, 40% chance you can click it
+        if (Math.random() < 0.6 && runAwayCount < 5) {
+          event.preventDefault()
+          runAwayCount++
+
+          // Add runaway class for positioning
+          button.classList.add("runaway")
+
+          // Random position within container
+          const container = button.parentElement
+          const maxX = container.offsetWidth - button.offsetWidth
+          const maxY = container.offsetHeight - button.offsetHeight
+
+          const randomX = Math.random() * maxX
+          const randomY = Math.random() * maxY
+
+          button.style.left = randomX + "px"
+          button.style.top = randomY + "px"
+
+          // Show tease message
+          const surpriseEl = document.getElementById("surpriseMessage")
+          surpriseEl.textContent =
+            teaseMessages[Math.floor(Math.random() * teaseMessages.length)]
+          surpriseEl.classList.add("show")
+
+          setTimeout(() => {
+            surpriseEl.classList.remove("show")
+          }, 1500)
+
+          // After 5 escapes, make it easier to catch
+          if (runAwayCount >= 5) {
+            button.textContent = "Okay okay, click me! 😅"
+          }
+        }
+      }
+
+      function sendLove() {
+        const button = document.getElementById("loveButton")
+
+        // Reset button position and state
+        button.classList.remove("runaway")
+        button.style.left = ""
+        button.style.top = ""
+        button.textContent = "Send Love 💖"
+        runAwayCount = 0
+
+        heartCount++
+        document.getElementById("heartCount").textContent = heartCount
+
+        // Update love meter
+        const percentage = Math.min(heartCount * 2, 100)
+        document.getElementById("loveFill").style.width = percentage + "%"
+
+        // Create floating hearts
+        for (let i = 0; i < 3; i++) {
+          createFloatingHeart()
+        }
+
+        // Show surprise messages at milestones
+        if (
+          heartCount === 5 ||
+          heartCount === 10 ||
+          heartCount === 25 ||
+          heartCount === 50
+        ) {
+          showSurprise()
+        }
+
+        // Show photo moment every 10 clicks
+        if (heartCount % 10 === 0 && heartCount <= 100) {
+          const momentIndex = heartCount / 10 - 1
+          showPhotoMoment(momentIndex)
+        }
+
+        // Special milestone at 50
+        if (heartCount === 50) {
+          document.getElementById("loveLabel").textContent =
+            "💯 LOVE OVERLOAD! 💯"
+          createHeartExplosion()
+        }
+      }
+
+      function createFloatingHeart() {
+        const heart = document.createElement("div")
+        heart.className = "floating-heart"
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)]
+        heart.style.left = Math.random() * window.innerWidth + "px"
+        heart.style.top = window.innerHeight + "px"
+        document.body.appendChild(heart)
+
+        setTimeout(() => {
+          heart.remove()
+        }, 4000)
+      }
+
+      function showSurprise() {
+        const surpriseEl = document.getElementById("surpriseMessage")
+        const message =
+          surpriseMessages[Math.floor(Math.random() * surpriseMessages.length)]
+        surpriseEl.textContent = message
+        surpriseEl.classList.add("show")
+
+        setTimeout(() => {
+          surpriseEl.classList.remove("show")
+        }, 3000)
+      }
+
+      function createHeartExplosion() {
+        for (let i = 0; i < 20; i++) {
+          setTimeout(() => {
+            createFloatingHeart()
+          }, i * 100)
+        }
+      }
+    </script>
+  </body>
+</html>
